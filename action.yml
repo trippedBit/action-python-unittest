@@ -1,0 +1,22 @@
+name: Execute unittests
+description: Executes the repository's unittests.
+inputs:
+    files:
+        description: Files containing the unittests
+        required: true 
+    python-version:
+        description: Python version to use, defaults to 3.9.17
+        default: 3.9.17
+runs:
+    using: composite
+    steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-python@v4
+          with:
+            python-version: ${{ inputs.python-version }}
+        - run: pip install -r requirements.txt
+          shell: cmd
+        - run: dir
+          shell: cmd
+        - run: python -m unittest ${{ inputs.files }}
+          shell: cmd
